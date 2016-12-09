@@ -1,0 +1,18 @@
+---
+
+- name: DMD | Check if my_package is installed
+  command: rpm -q osquery
+  register: osquery_check_deb
+  become: yes
+  failed_when: osquery_check_deb.rc > 1
+  changed_when: osquery_check_deb.rc == 1
+  tags:
+    -osquery
+
+- name: OSQUERY | install package
+  yum: name="https://osquery-packages.s3.amazonaws.com/centos{{ansible_distribution_major_version}}/noarch/osquery-s3-centos{{ansible_distribution_major_version}}-repo-1-0.0.noarch.rpm" state="present"
+  become: true
+  when: osquery_check_deb.rc == 1
+  tags:
+    -osquery
+
