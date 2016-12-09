@@ -1,6 +1,6 @@
 ---
 
-- name: DMD | Check if my_package is installed
+- name: OSQUERY | Check if my_package is installed
   command: rpm -q osquery
   register: osquery_check_deb
   become: yes
